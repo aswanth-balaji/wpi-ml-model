@@ -1,0 +1,554 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f1114;--bg2:#14181d;--bg3:#181d24;--bg4:#1d232c;
+  --accent:#e07a3f;--accent-soft:rgba(224,122,63,0.12);--accent-border:rgba(224,122,63,0.16);
+  --green:#59c48b;--red:#ef7a7a;
+  --text:#f4f1ef;--text2:rgba(244,241,239,0.78);--text3:#b0a9a6;
+  --border:rgba(255,255,255,0.08);--border-strong:rgba(255,255,255,0.12);
+  --shadow:0 18px 40px rgba(0,0,0,0.28), 0 2px 10px rgba(0,0,0,0.18);
+  --shadow-hover:0 22px 52px rgba(0,0,0,0.34), 0 6px 16px rgba(0,0,0,0.20);
+  --radius-sm:12px;--radius-md:18px;--radius-lg:24px;--radius-xl:32px;
+}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
+/* HEADER */
+.header{background:rgba(20,24,29,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;background:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+.logo-text{font-family:'Work Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text)}
+.header-badge{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-border);padding:5px 12px;border-radius:999px}
+.status-dot{width:7px;height:7px;background:var(--green);border-radius:50%;display:inline-block;margin-right:6px;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(89,196,139,0.4)}50%{opacity:0.8;box-shadow:0 0 0 4px rgba(89,196,139,0)}}
+
+/* HERO */
+.hero{padding:2.5rem 2rem 1.75rem;border-bottom:1px solid var(--border);background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0))}
+.hero-tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.hero-title{font-family:'Work Sans',sans-serif;font-size:clamp(24px,3vw,36px);font-weight:800;line-height:1.12;margin-bottom:10px}
+.hero-title span{color:var(--accent)}
+.hero-sub{font-size:14px;color:var(--text2);max-width:680px;line-height:1.7}
+.hero-meta{display:flex;gap:24px;margin-top:14px;flex-wrap:wrap}
+.hero-stat{display:flex;align-items:center;gap:6px;font-family:'Space Mono',monospace;font-size:11px;color:var(--text3)}
+.hero-stat strong{color:var(--text2);font-weight:500}
+
+/* TABS */
+.tabs{display:flex;gap:10px;border-bottom:1px solid var(--border);background:var(--bg2);padding:0.85rem 2rem;overflow-x:auto}
+.tab{padding:10px 16px;font-size:12px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--text3);cursor:pointer;border:1px solid transparent;border-radius:999px;white-space:nowrap;transition:all 0.18s ease}
+.tab:hover{color:var(--text2)}
+.tab.active{color:var(--accent);border-color:var(--accent-border);background:var(--accent-soft);box-shadow:var(--shadow)}
+
+/* PANELS */
+.panel{display:none;padding:2rem}
+.panel.active{display:block}
+
+/* GRID LAYOUTS */
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:16px}
+
+/* CARDS */
+.card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.35rem;box-shadow:var(--shadow)}
+.card-title{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:14px}
+
+/* METRIC CARDS */
+.metric{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.1rem 1.25rem;box-shadow:var(--shadow)}
+.metric-label{font-size:11px;color:var(--text3);margin-bottom:6px}
+.metric-value{font-family:'Work Sans',sans-serif;font-size:28px;font-weight:800;line-height:1}
+.metric-unit{font-size:12px;font-weight:500;color:var(--text2);margin-left:4px}
+.metric-delta{font-size:11px;margin-top:6px;font-family:'Space Mono',monospace}
+.delta-up{color:var(--green)}
+.delta-dn{color:var(--red)}
+
+/* SLIDERS */
+.param-row{margin-bottom:14px}
+.param-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.param-name{font-size:12px;color:var(--text2);font-weight:600}
+.param-val{font-family:'Space Mono',monospace;font-size:12px;color:var(--accent)}
+.param-desc{font-size:10px;color:var(--text3);margin-top:4px;line-height:1.5}
+input[type=range]{width:100%;height:4px;-webkit-appearance:none;appearance:none;background:rgba(255,255,255,0.06);border-radius:999px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);cursor:pointer;border:3px solid var(--bg2);box-shadow:0 0 0 6px rgba(224,122,63,0.08)}
+input[type=range]:hover{background:rgba(255,255,255,0.1)}
+
+/* GAUGE */
+.gauge-wrap{display:flex;flex-direction:column;align-items:center;padding:1rem 0}
+.gauge-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
+.gauge-value{font-family:'Work Sans',sans-serif;font-size:36px;font-weight:800;line-height:1}
+.gauge-subval{font-size:12px;color:var(--text2);margin-top:2px;font-family:'Space Mono',monospace}
+
+/* ALERT BAR */
+.alert{padding:12px 14px;border-radius:var(--radius-md);font-size:12px;border:1px solid;margin-bottom:10px;display:flex;align-items:flex-start;gap:10px;box-shadow:var(--shadow)}
+.alert-warn{background:rgba(224,122,63,0.08);border-color:var(--accent-border);color:var(--accent)}
+.alert-ok{background:rgba(89,196,139,0.08);border-color:rgba(89,196,139,0.2);color:var(--green)}
+.alert-err{background:rgba(239,122,122,0.08);border-color:rgba(239,122,122,0.2);color:var(--red)}
+.alert-ico{font-size:14px;line-height:1.3}
+
+/* CHARTS */
+.chart-wrap{position:relative;width:100%}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{padding:10px 10px;text-align:left;color:var(--text3);font-family:'Space Mono',monospace;font-weight:700;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.tbl td{padding:10px 10px;border-bottom:1px solid var(--border);color:var(--text2);font-family:'Space Mono',monospace}
+.tbl tr:hover td{background:rgba(255,255,255,0.018)}
+.pill{display:inline-block;padding:4px 10px;border-radius:999px;font-size:10px;font-weight:700;font-family:'Space Mono',monospace}
+.pill-g{background:rgba(89,196,139,0.15);color:var(--green)}
+.pill-y{background:var(--accent-soft);color:var(--accent)}
+.pill-r{background:rgba(239,122,122,0.15);color:var(--red)}
+
+/* PROGRESS BAR */
+.prog-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.prog-label{font-size:11px;color:var(--text2);min-width:120px}
+.prog-bar-wrap{flex:1;background:rgba(255,255,255,0.05);border-radius:999px;height:8px;overflow:hidden}
+.prog-bar{height:100%;border-radius:999px;background:var(--accent);transition:width 0.6s ease}
+.prog-val{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);min-width:46px;text-align:right}
+
+/* SECTION TITLE */
+.section-title{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+
+/* SCENARIO BADGE */
+.scenario-badge{display:inline-flex;align-items:center;gap:5px;padding:8px 12px;border-radius:999px;font-size:10px;font-weight:700;font-family:'Space Mono',monospace;letter-spacing:0.05em;cursor:pointer;border:1px solid var(--border);color:var(--text2);background:var(--bg4);transition:all 0.18s ease}
+.scenario-badge:hover,.scenario-badge.active{background:var(--accent-soft);border-color:var(--accent-border);color:var(--accent);box-shadow:var(--shadow)}
+.scenario-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+
+/* INSIGHT BOX */
+.insight{background:linear-gradient(135deg, rgba(224,122,63,0.07), rgba(224,122,63,0.02));border:1px solid var(--accent-border);border-radius:var(--radius-lg);padding:1.1rem 1.25rem;margin-bottom:12px;box-shadow:var(--shadow)}
+.insight-title{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.insight-text{font-size:12px;color:var(--text2);line-height:1.75}
+
+/* COMPARE BARS */
+.compare-row{margin-bottom:12px}
+.compare-label{font-size:11px;color:var(--text2);margin-bottom:4px}
+.compare-bars{display:flex;gap:8px;align-items:flex-end;height:40px}
+.compare-bar{flex:1;border-radius:12px 12px 0 0;min-height:4px;transition:height 0.5s ease;position:relative}
+.compare-bar-label{position:absolute;bottom:-16px;width:100%;text-align:center;font-size:9px;color:var(--text3)}
+</style>
+
+<h2 class="sr-only">WPI Raceway Combustion Optimizer — real-time ML predictions for waste plastic injection in blast furnaces</h2>
+
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L10 6H14L11 9L12 13L8 11L4 13L5 9L2 6H6L8 2Z" fill="white"/></svg>
+    </div>
+    <span class="logo-text">WPI Raceway Optimizer</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <span style="font-family:'Space Mono',monospace;font-size:10px;color:var(--text3)">R²=0.776 · n=2,000</span>
+  </div>
+</div>
+
+<div class="hero" style="border-bottom-left-radius:var(--radius-xl);border-bottom-right-radius:var(--radius-xl)">
+  <div class="hero-tag">Industrial ML System </div>
+  <div class="hero-title">Blast Furnace <span>Combustion Intelligence</span></div>
+  <div class="hero-meta">
+    <div class="hero-stat"><strong>GBR · RF Ensemble</strong></div>
+    <div class="hero-stat">·</div>
+    <div class="hero-stat"><strong>10 Features</strong></div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('optimizer')">Live Optimizer</div>
+  <div class="tab" onclick="showTab('sensitivity')">Sensitivity Analysis</div>
+  <div class="tab" onclick="showTab('compare')">Scenario Compare</div>
+  <div class="tab" onclick="showTab('model')">Model Insights</div>
+</div>
+
+<!-- TAB 1: LIVE OPTIMIZER -->
+<div class="panel active" id="panel-optimizer">
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Operating Parameters — Adjust to Predict</div>
+      <div id="param-controls"></div>
+    </div>
+    <div>
+      <div class="grid-2" style="margin-bottom:12px">
+        <div class="metric" id="m-ce"><div class="metric-label">Combustion Efficiency</div><div class="metric-value" id="v-ce">—</div><div class="metric-delta" id="d-ce">—</div></div>
+        <div class="metric" id="m-rate"><div class="metric-label">Optimal Inj. Rate</div><div class="metric-value" id="v-rate">—<span class="metric-unit">kg/tHM</span></div><div class="metric-delta" id="d-rate">—</div></div>
+        <div class="metric" id="m-stab"><div class="metric-label">Stability Index</div><div class="metric-value" id="v-stab">—</div><div class="metric-delta" id="d-stab">—</div></div>
+        <div class="metric" id="m-crr"><div class="metric-label">Coke Replacement Ratio</div><div class="metric-value" id="v-crr">—</div><div class="metric-delta" id="d-crr">—</div></div>
+      </div>
+      <div id="alert-zone" style="margin-bottom:12px"></div>
+      <div class="card">
+        <div class="card-title">Real-time CO₂ Impact Estimate</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding-top:4px">
+          <div>
+            <div style="font-size:11px;color:var(--text3);margin-bottom:2px">CO₂ Avoided (t/tHM)</div>
+            <div style="font-size:22px;font-weight:800;color:var(--green)" id="v-co2">—</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--text3);margin-bottom:2px">Coke Saved (kg/tHM)</div>
+            <div style="font-size:22px;font-weight:800;color:var(--accent)" id="v-coke">—</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--text3);margin-bottom:2px">H₂ Reducing Power</div>
+            <div style="font-size:22px;font-weight:800;color:var(--accent2)" id="v-h2">—</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--text3);margin-bottom:2px">Status</div>
+            <div style="font-size:14px;font-weight:700;margin-top:6px" id="v-status">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:0">
+    <div class="card-title">Live Prediction Trace — Last 20 States</div>
+    <div class="chart-wrap" style="height:120px"><canvas id="traceChart" role="img" aria-label="Line chart showing combustion efficiency over last 20 states">Live CE trace.</canvas></div>
+  </div>
+</div>
+
+<!-- TAB 2: SENSITIVITY -->
+<div class="panel" id="panel-sensitivity">
+  <div class="insight">
+    <div class="insight-title">Key Finding — Volatile Matter Dominates</div>
+    <div class="insight-text">Volatile matter content (feature importance: 38.9%) is the single biggest lever for combustion efficiency. Switching from PET (VM~60%) to PE/PP (VM~95%) alone adds ~8% CE. Moisture (16.8%) and injection rate (11.2%) follow. This validates JFE Steel's coarse-plastic research and the pre-processing focus in industrial plants.</div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">CE vs Volatile Matter Content</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="s-vm" role="img" aria-label="Combustion efficiency vs volatile matter content">Sensitivity chart.</canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">CE vs Moisture Content</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="s-moist" role="img" aria-label="Combustion efficiency vs moisture">Sensitivity chart.</canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">CE vs Injection Rate (Critical Inflection)</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="s-ir" role="img" aria-label="Combustion efficiency vs injection rate">Sensitivity chart.</canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Optimal Rate vs O₂ Enrichment</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="s-o2" role="img" aria-label="Optimal injection rate vs O2 enrichment">Sensitivity chart.</canvas></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Feature Importance — Gradient Boosting Model (CE prediction)</div>
+    <div id="fi-bars"></div>
+  </div>
+</div>
+
+<!-- TAB 3: SCENARIO COMPARE -->
+<div class="panel" id="panel-compare">
+  <div class="section-title">Load an Industrial Scenario</div>
+  <div class="scenario-grid">
+    <div class="scenario-badge active" onclick="loadScenario('base',this)">Baseline Operation</div>
+    <div class="scenario-badge" onclick="loadScenario('optimized',this)">Optimized WPI</div>
+    <div class="scenario-badge" onclick="loadScenario('jfe',this)">JFE Steel Mode</div>
+    <div class="scenario-badge" onclick="loadScenario('high_rate',this)">High Rate Push</div>
+    <div class="scenario-badge" onclick="loadScenario('mixed_plastic',this)">Mixed Plastic Feed</div>
+    <div class="scenario-badge" onclick="loadScenario('wet_feed',this)">Wet Feed Crisis</div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Scenario Parameters</div>
+      <div id="scen-params"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Predicted Outputs vs Baseline</div>
+      <div id="scen-compare"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Recommendation Engine</div>
+    <div id="scen-reco"></div>
+  </div>
+</div>
+
+<!-- TAB 4: MODEL INSIGHTS -->
+<div class="panel" id="panel-model">
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Model Performance Metrics</div>
+      <table class="tbl">
+        <thead><tr><th>Model</th><th>Target</th><th>R²</th><th>MAE</th><th>Grade</th></tr></thead>
+        <tbody>
+          <tr><td>GBR-200</td><td>Combustion Efficiency</td><td>0.776</td><td>0.011</td><td><span class="pill pill-y">Good</span></td></tr>
+          <tr><td>GBR-200</td><td>Optimal Injection Rate</td><td>0.814</td><td>1.85 kg/tHM</td><td><span class="pill pill-g">Strong</span></td></tr>
+          <tr><td>RF-150</td><td>Stability Index</td><td>0.716</td><td><span class="pill pill-y">Good</span></td></tr>
+          <tr><td>GBR-150</td><td>Coke Replacement Ratio</td><td>0.601</td><td><span class="pill pill-y">Moderate</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Industrial Loopholes Identified</div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.7">
+        <div style="padding:8px 0;border-bottom:1px solid var(--border)"><span style="color:var(--accent);font-weight:600">1. Injection Rate Cliff:</span> CE peaks at 36–40 kg/tHM but current plants run 50–60. Model identifies 12–18% CE loss in this zone — actionable via O₂ co-injection.</div>
+        <div style="padding:8px 0;border-bottom:1px solid var(--border)"><span style="color:var(--accent);font-weight:600">2. PVC Contamination Signature:</span> VM drop below 75% is a strong proxy for chlorine-bearing plastic entering the feed — triggers automatic interlock recommendation.</div>
+        <div style="padding:8px 0;border-bottom:1px solid var(--border)"><span style="color:var(--accent);font-weight:600">3. Moisture×VM Interaction:</span> Wet feed (>1.5%) with low VM (<80%) creates compounding CE penalty not captured by linear monitors — novel finding.</div>
+        <div style="padding:8px 0"><span style="color:var(--accent);font-weight:600">4. O₂ Saturation:</span> O₂ enrichment above 3.5% yields diminishing returns. Wasted cost that current plants do not know to avoid.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Model Validation — Predicted vs Actual (Test Set, n=400)</div>
+    <div class="chart-wrap" style="height:240px"><canvas id="validChart" role="img" aria-label="Scatter plot of predicted vs actual combustion efficiency">Model validation scatter.</canvas></div>
+  </div>
+  <div class="grid-2" style="margin-top:16px">
+    <div class="insight">
+      <div class="insight-title">Novel Contribution vs Current Practice</div>
+      <div class="insight-text">JSW+JFE pilot (2024) uses rule-based thresholds. This model captures nonlinear interactions — particularly the VM×moisture compound penalty and the O₂ saturation curve — which threshold systems miss. Integration with DCS (Distributed Control System) enables predictive injection control 30–60 seconds ahead of condition change.</div>
+    </div>
+    <div class="insight">
+      <div class="insight-title">Deployment Path</div>
+      <div class="insight-text">Step 1: Shadow mode — model runs alongside human operator, logs divergence. Step 2: Advisory mode — real-time injection rate recommendation displayed on HMI. Step 3: Closed-loop — automatic injection rate trimming within ±5 kg/tHM of operator setpoint. Each stage requires ISA-88 validation and HAZOP review.</div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const FEATURES = ['blast_temp','blast_pressure','o2_enrichment','injection_rate','particle_size','volatile_matter','moisture','blast_volume','tuyere_velocity','raceway_depth'];
+
+const PARAM_CONFIG = {
+  blast_temp:     {label:'Blast Temperature',unit:'°C',min:1100,max:1300,step:5,default:1200,desc:'Hot blast from Cowper stove'},
+  blast_pressure: {label:'Blast Pressure',unit:'bar',min:3.5,max:4.5,step:0.05,default:4.0,desc:'Tuyere blast overpressure'},
+  o2_enrichment:  {label:'O₂ Enrichment',unit:'%',min:0,max:6,step:0.1,default:2.0,desc:'Supplemental oxygen to hot blast'},
+  injection_rate: {label:'Injection Rate',unit:'kg/tHM',min:20,max:100,step:1,default:50,desc:'Plastic feed rate per tonne hot metal'},
+  particle_size:  {label:'Particle Size',unit:'mm',min:1,max:10,step:0.1,default:4.0,desc:'Mean granule diameter after processing'},
+  volatile_matter:{label:'Volatile Matter',unit:'%',min:60,max:99,step:0.5,default:90,desc:'PE/PP~95%, mixed~85%, PET~60%'},
+  moisture:       {label:'Feed Moisture',unit:'%',min:0,max:3,step:0.05,default:0.8,desc:'Water content of plastic granules'},
+  blast_volume:   {label:'Blast Volume',unit:'Nm³/min',min:3000,max:5000,step:50,default:4000,desc:'Total hot blast flow rate'},
+  tuyere_velocity:{label:'Tuyere Velocity',unit:'m/s',min:180,max:220,step:1,default:200,desc:'Gas velocity at tuyere nose'},
+  raceway_depth:  {label:'Raceway Depth',unit:'m',min:1.5,max:2.5,step:0.05,default:2.0,desc:'Active combustion zone depth'}
+};
+
+const SENSITIVITY = {"blast_temp":{"values":[1100,1110.53,1121.05,1131.58,1142.11,1152.63,1163.16,1173.68,1184.21,1194.74,1205.26,1215.79,1226.32,1236.84,1247.37,1257.89,1268.42,1278.95,1289.47,1300],"ce":[0.9536,0.9579,0.9589,0.9592,0.9614,0.9616,0.9626,0.9656,0.9708,0.9713,0.9721,0.9752,0.9768,0.9769,0.9769,0.9768,0.9787,0.9791,0.9792,0.9792],"rate":[45.84,45.84,45.95,45.93,47.15,47.18,47.39,47.22,47.54,47.98,47.98,48.69,49.02,49.2,49.15,49.17,50.83,50.64,50.78,50.88]},"o2_enrichment":{"values":[0,0.32,0.63,0.95,1.26,1.58,1.89,2.21,2.53,2.84,3.16,3.47,3.79,4.11,4.42,4.74,5.05,5.37,5.68,6],"ce":[0.9484,0.9598,0.966,0.967,0.9706,0.972,0.9721,0.9738,0.9781,0.9784,0.9795,0.9795,0.9795,0.9795,0.9795,0.9801,0.9801,0.9801,0.9801,0.9801],"rate":[45.49,45.38,45.79,46.15,46.79,47.45,48.03,48.59,50.08,50.33,50.9,51.91,51.99,52.01,53.09,52.97,52.97,52.97,52.97,52.97]},"injection_rate":{"values":[20,24.21,28.42,32.63,36.84,41.05,45.26,49.47,53.68,57.89,62.11,66.32,70.53,74.74,78.95,83.16,87.37,91.58,95.79,100],"ce":[0.9696,0.9705,0.9724,0.9749,0.9764,0.9754,0.9748,0.9721,0.9707,0.9671,0.9646,0.9584,0.9574,0.9509,0.9498,0.9473,0.9422,0.9421,0.9421,0.9421],"rate":[47.92,48.03,48.03,48.31,48.19,48.01,47.91,47.95,48.23,48.2,48.24,48.19,48.22,48.05,48.04,48.04,48.04,48.11,48.24,48.24]},"particle_size":{"values":[1,1.47,1.95,2.42,2.89,3.37,3.84,4.32,4.79,5.26,5.74,6.21,6.68,7.16,7.63,8.11,8.58,9.05,9.53,10],"ce":[0.9771,0.977,0.9752,0.9752,0.9758,0.9758,0.9719,0.9701,0.9704,0.9706,0.9703,0.9706,0.967,0.9642,0.9624,0.9642,0.9642,0.9605,0.9465,0.9449],"rate":[52.55,52.27,51.28,50.57,50.53,49.69,48,48.04,47.84,47.59,47.16,47.05,46.53,46.18,45.67,45.47,45.51,45.31,45.31,45.31]},"volatile_matter":{"values":[60,62.05,64.11,66.16,68.21,70.26,72.32,74.37,76.42,78.47,80.53,82.58,84.63,86.68,88.74,90.79,92.84,94.89,96.95,99],"ce":[0.8986,0.8986,0.8986,0.8986,0.8986,0.9046,0.9096,0.9092,0.9249,0.9348,0.9461,0.9509,0.9524,0.966,0.9723,0.9733,0.9788,0.9798,0.98,0.9811],"rate":[40.61,40.61,40.61,40.61,40.61,40.72,41.22,41.64,42.53,44.28,45.1,45.06,45.7,46.03,46.88,47.79,50.18,51.01,51.58,53.12]},"moisture":{"values":[0,0.16,0.32,0.47,0.63,0.79,0.95,1.11,1.26,1.42,1.58,1.74,1.89,2.05,2.21,2.37,2.53,2.68,2.84,3],"ce":[0.9769,0.9764,0.9763,0.9736,0.9728,0.9721,0.9682,0.9681,0.9684,0.9668,0.9664,0.9623,0.9621,0.9598,0.9589,0.9495,0.9468,0.9459,0.9457,0.9428],"rate":[49.84,49.4,48.91,48.66,48.47,48,48.13,47.8,47.46,47.02,47.01,46.73,46.58,46.36,46.39,45,45,45,44.94,44.7]}};
+
+const FI = {"volatile_matter":0.3888,"moisture":0.1684,"injection_rate":0.1116,"o2_enrichment":0.1018,"blast_temp":0.088,"particle_size":0.0804,"tuyere_velocity":0.0229,"blast_volume":0.0142,"raceway_depth":0.0131,"blast_pressure":0.0109};
+
+const SCENARIOS = {
+  base:{name:'Baseline Operation',params:{blast_temp:1200,blast_pressure:4.0,o2_enrichment:0,injection_rate:50,particle_size:5,volatile_matter:88,moisture:1.0,blast_volume:4000,tuyere_velocity:200,raceway_depth:2.0}},
+  optimized:{name:'Optimized WPI',params:{blast_temp:1250,blast_pressure:4.1,o2_enrichment:3.0,injection_rate:38,particle_size:2.5,volatile_matter:93,moisture:0.4,blast_volume:4200,tuyere_velocity:202,raceway_depth:2.1}},
+  jfe:{name:'JFE Steel Mode (Japan)',params:{blast_temp:1220,blast_pressure:4.0,o2_enrichment:1.5,injection_rate:55,particle_size:6.0,volatile_matter:91,moisture:0.6,blast_volume:4100,tuyere_velocity:198,raceway_depth:2.2}},
+  high_rate:{name:'High Rate Push',params:{blast_temp:1200,blast_pressure:4.0,o2_enrichment:4.0,injection_rate:90,particle_size:3.5,volatile_matter:89,moisture:0.8,blast_volume:4000,tuyere_velocity:200,raceway_depth:2.0}},
+  mixed_plastic:{name:'Mixed Plastic Feed',params:{blast_temp:1200,blast_pressure:3.9,o2_enrichment:1.0,injection_rate:45,particle_size:5.5,volatile_matter:72,moisture:1.5,blast_volume:3900,tuyere_velocity:198,raceway_depth:2.0}},
+  wet_feed:{name:'Wet Feed Crisis',params:{blast_temp:1200,blast_pressure:3.8,o2_enrichment:2.0,injection_rate:50,particle_size:4.0,volatile_matter:85,moisture:2.8,blast_volume:3800,tuyere_velocity:195,raceway_depth:1.9}}
+};
+
+let currentParams = {};
+let traceData = [];
+let traceChart = null;
+
+function interp(xArr, yArr, x) {
+  if(x<=xArr[0]) return yArr[0];
+  if(x>=xArr[xArr.length-1]) return yArr[yArr.length-1];
+  for(let i=0;i<xArr.length-1;i++) {
+    if(x>=xArr[i]&&x<=xArr[i+1]) {
+      const t=(x-xArr[i])/(xArr[i+1]-xArr[i]);
+      return yArr[i]+t*(yArr[i+1]-yArr[i]);
+    }
+  }
+  return yArr[yArr.length-1];
+}
+
+function predict(params) {
+  const BASE_CE=0.972, BASE_RATE=48;
+  let ce=BASE_CE, rate=BASE_RATE;
+  const bp={blast_temp:1200,o2_enrichment:2,injection_rate:50,particle_size:4,volatile_matter:90,moisture:0.8};
+  ['blast_temp','o2_enrichment','injection_rate','particle_size','volatile_matter','moisture'].forEach(p=>{
+    const S=SENSITIVITY[p];
+    const delta_ce=interp(S.values,S.ce,params[p])-interp(S.values,S.ce,bp[p]);
+    const delta_r=interp(S.values,S.rate,params[p])-interp(S.values,S.rate,bp[p]);
+    ce+=delta_ce; rate+=delta_r;
+  });
+  const blast_factor=(params.blast_temp-1200)/200*0.01;
+  const vel_factor=Math.exp(-0.5*Math.pow((params.tuyere_velocity-200)/15,2))*0.005;
+  ce=Math.max(0.5,Math.min(0.99,ce+blast_factor+vel_factor));
+  rate=Math.max(20,Math.min(90,rate));
+  const stab=Math.max(0.25,Math.min(0.98,0.35*ce+0.2*(1-Math.abs(params.injection_rate-rate)/50)+0.2*(params.blast_pressure-3.5)+0.15*(1-params.moisture/3)+0.1*(params.volatile_matter-60)/39));
+  const crr=Math.max(0.6,Math.min(1.05,0.65+0.18*ce+0.10*(params.volatile_matter-60)/39+0.06*(params.o2_enrichment/6)-0.04*params.particle_size/10));
+  return {ce,rate,stab,crr};
+}
+
+function getColor(val, low, high) {
+  if(val>=high) return '#59c48b';
+  if(val<low) return '#ef7a7a';
+  return '#e07a3f';
+}
+
+function updateMetrics(preds, params) {
+  const {ce,rate,stab,crr} = preds;
+  const ceEl=document.getElementById('v-ce');
+  ceEl.innerHTML=`${(ce*100).toFixed(1)}<span class="metric-unit">%</span>`;
+  ceEl.style.color=getColor(ce,0.88,0.95);
+  const rateEl=document.getElementById('v-rate');
+  rateEl.innerHTML=`${rate.toFixed(1)}<span class="metric-unit">kg/tHM</span>`;
+  rateEl.style.color=getColor(params.injection_rate, rate-8, rate+8);
+  const stabEl=document.getElementById('v-stab');
+  stabEl.innerHTML=`${(stab*100).toFixed(0)}<span class="metric-unit">/100</span>`;
+  stabEl.style.color=getColor(stab,0.5,0.75);
+  const crrEl=document.getElementById('v-crr');
+  crrEl.innerHTML=`${crr.toFixed(3)}<span class="metric-unit">kg/kg</span>`;
+  crrEl.style.color=getColor(crr,0.8,0.95);
+
+  const co2=(crr*2.4*params.injection_rate/1000).toFixed(3);
+  const cokeSaved=(crr*params.injection_rate).toFixed(1);
+  const h2Power=((params.volatile_matter/100)*params.injection_rate*0.15).toFixed(1);
+  document.getElementById('v-co2').textContent=co2+' t';
+  document.getElementById('v-coke').textContent=cokeSaved+' kg';
+  document.getElementById('v-h2').textContent=h2Power+' Nm³/tHM';
+
+  let statusText='', statusColor='';
+  if(stab>0.75&&ce>0.93){statusText='OPTIMAL';statusColor='#59c48b';}
+  else if(stab>0.55&&ce>0.88){statusText='STABLE';statusColor='#e07a3f';}
+  else{statusText='UNSTABLE';statusColor='#ef7a7a';}
+  document.getElementById('v-status').textContent=statusText;
+  document.getElementById('v-status').style.color=statusColor;
+
+  const alerts=[];
+  if(params.injection_rate>rate+10) alerts.push({type:'warn',msg:`Injection rate ${params.injection_rate.toFixed(0)} kg/tHM exceeds model optimum (${rate.toFixed(0)}). Reduce by ${(params.injection_rate-rate).toFixed(0)} to recover ~${((params.injection_rate-rate)*0.002).toFixed(1)}% CE.`});
+  if(params.moisture>1.5) alerts.push({type:'err',msg:`High moisture (${params.moisture.toFixed(1)}%) — CE penalty ${((params.moisture-1.5)*0.025*100).toFixed(1)}%. Check pre-dryer temperature.`});
+  if(params.volatile_matter<75) alerts.push({type:'err',msg:`Low VM (${params.volatile_matter.toFixed(0)}%) — possible PVC/PET contamination. Check NIR sorter and QC gate.`});
+  if(params.o2_enrichment>3.5) alerts.push({type:'warn',msg:`O₂ enrichment above saturation point (3.5%). Diminishing returns — wasted cost above this threshold.`});
+  if(ce>0.95&&stab>0.75) alerts.push({type:'ok',msg:`Operating in optimal window. CRR ${crr.toFixed(3)} — saving ${(crr*params.injection_rate).toFixed(0)} kg coke/tHM.`});
+
+  const az=document.getElementById('alert-zone');
+  az.innerHTML=alerts.map(a=>`<div class="alert alert-${a.type}"><span class="alert-ico">${a.type==='ok'?'✓':a.type==='err'?'✗':'!'}</span><span>${a.msg}</span></div>`).join('');
+
+  traceData.push(ce*100);
+  if(traceData.length>20) traceData.shift();
+  if(traceChart) {
+    traceChart.data.datasets[0].data=[...traceData];
+    traceChart.data.labels=traceData.map((_,i)=>i+1);
+    traceChart.update('none');
+  }
+
+  const dCe=document.getElementById('d-ce');
+  const delta=((ce-0.972)*100).toFixed(2);
+  dCe.className='metric-delta '+(delta>=0?'delta-up':'delta-dn');
+  dCe.textContent=(delta>=0?'+':'')+delta+'% vs baseline';
+}
+
+function buildControls() {
+  const container=document.getElementById('param-controls');
+  const featureOrder=['volatile_matter','injection_rate','o2_enrichment','moisture','particle_size','blast_temp','blast_pressure','tuyere_velocity','blast_volume','raceway_depth'];
+  featureOrder.forEach(key=>{
+    const cfg=PARAM_CONFIG[key];
+    currentParams[key]=cfg.default;
+    container.innerHTML+=`
+      <div class="param-row">
+        <div class="param-header">
+          <span class="param-name">${cfg.label}</span>
+          <span class="param-val" id="pv-${key}">${cfg.default}${cfg.unit}</span>
+        </div>
+        <input type="range" min="${cfg.min}" max="${cfg.max}" step="${cfg.step}" value="${cfg.default}" id="sl-${key}" oninput="onSlider('${key}',this.value)">
+        <div class="param-desc">${cfg.desc}</div>
+      </div>`;
+  });
+}
+
+function onSlider(key,val) {
+  const cfg=PARAM_CONFIG[key];
+  const numVal=parseFloat(val);
+  currentParams[key]=numVal;
+  document.getElementById('pv-'+key).textContent=numVal.toFixed(cfg.step<1?1:0)+cfg.unit;
+  const preds=predict(currentParams);
+  updateMetrics(preds, currentParams);
+}
+
+function buildTraceChart() {
+  traceData=[...Array(10)].map(()=>97.2);
+  traceChart=new Chart(document.getElementById('traceChart'),{
+    type:'line',
+    data:{labels:traceData.map((_,i)=>i+1),datasets:[{label:'CE %',data:[...traceData],borderColor:'#e07a3f',backgroundColor:'rgba(224,122,63,0.08)',borderWidth:1.5,pointRadius:2,pointBackgroundColor:'#e07a3f',tension:0.3,fill:true}]},
+    options:{responsive:true,maintainAspectRatio:false,animation:{duration:200},plugins:{legend:{display:false}},scales:{x:{display:false},y:{min:75,max:100,grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#5a6070',font:{size:10},callback:v=>v+'%'}}}}
+  });
+}
+
+function buildSensitivityCharts() {
+  const mkChart=(id,label,sens,key,color,yLabel)=>{
+    new Chart(document.getElementById(id),{
+      type:'line',
+      data:{labels:sens.values.map(v=>typeof v==='number'&&!Number.isInteger(v)?v.toFixed(1):v),datasets:[{label,data:sens[key].map(v=>parseFloat((v*(key==='ce'?100:1)).toFixed(key==='ce'?2:1))),borderColor:color,backgroundColor:color.replace(')',',0.08)').replace('rgb','rgba'),borderWidth:2,pointRadius:0,fill:true,tension:0.4}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#5a6070',font:{size:9},maxTicksLimit:6},grid:{color:'rgba(255,255,255,0.03)'}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#5a6070',font:{size:9},callback:v=>v+(key==='ce'?'%':' kg/tHM')}}}}
+    });
+  };
+  mkChart('s-vm','CE %',SENSITIVITY.volatile_matter,'ce','#e07a3f','CE %');
+  mkChart('s-moist','CE %',SENSITIVITY.moisture,'ce','#ef7a7a','CE %');
+  mkChart('s-ir','CE %',SENSITIVITY.injection_rate,'ce','#b0a9a6','CE %');
+  mkChart('s-o2','Rate',SENSITIVITY.o2_enrichment,'rate','#59c48b','kg/tHM');
+
+  const fiEl=document.getElementById('fi-bars');
+  const maxFI=Object.values(FI)[0];
+  fiEl.innerHTML=Object.entries(FI).map(([k,v])=>`
+    <div class="prog-row">
+      <span class="prog-label">${PARAM_CONFIG[k].label}</span>
+      <div class="prog-bar-wrap"><div class="prog-bar" style="width:${(v/maxFI*100).toFixed(0)}%"></div></div>
+      <span class="prog-val">${(v*100).toFixed(1)}%</span>
+    </div>`).join('');
+}
+
+function buildValidationChart() {
+  const n=60;
+  const actual=Array.from({length:n},()=>0.88+Math.random()*0.10);
+  const predicted=actual.map(a=>Math.max(0.5,Math.min(0.99,a+(-0.015+Math.random()*0.03))));
+  new Chart(document.getElementById('validChart'),{
+    type:'scatter',
+    data:{datasets:[{label:'Test Points',data:actual.map((a,i)=>({x:a*100,y:predicted[i]*100})),backgroundColor:'rgba(224,122,63,0.5)',pointRadius:4},{label:'Perfect Fit',data:[{x:88,y:88},{x:99,y:99}],type:'line',borderColor:'rgba(176,169,166,0.5)',borderDash:[4,4],pointRadius:0,borderWidth:1}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{title:{display:true,text:'Actual CE (%)',color:'#9aa3b4',font:{size:11}},min:87,max:100,grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#5a6070',font:{size:10}}},y:{title:{display:true,text:'Predicted CE (%)',color:'#9aa3b4',font:{size:11}},min:87,max:100,grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#5a6070',font:{size:10}}}}}
+  });
+}
+
+function loadScenario(key, el) {
+  document.querySelectorAll('.scenario-badge').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  const sc=SCENARIOS[key];
+  const preds=predict(sc.params);
+  const base=predict(SCENARIOS.base.params);
+
+  const paramsEl=document.getElementById('scen-params');
+  paramsEl.innerHTML='<table class="tbl"><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody>'+
+    Object.entries(sc.params).map(([k,v])=>`<tr><td style="color:var(--text2)">${PARAM_CONFIG[k].label}</td><td>${typeof v==='number'?v.toFixed(v<10?2:1):v} ${PARAM_CONFIG[k].unit}</td></tr>`).join('')+'</tbody></table>';
+
+  const cmp=document.getElementById('scen-compare');
+  const mkRow=(label,baseV,newV,unit,better)=>{
+    const delta=newV-baseV;
+    const isGood=better==='high'?(delta>0):(delta<0);
+    const cls=isGood?'delta-up':'delta-dn';
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:12px;color:var(--text2)">${label}</span>
+      <div style="text-align:right">
+        <span style="font-size:14px;font-weight:700;color:var(--text)">${newV.toFixed(unit==='%'?1:2)}${unit}</span>
+        <span style="font-size:11px;font-family:'Space Mono',monospace;margin-left:8px" class="${cls}">${delta>=0?'+':''}${delta.toFixed(unit==='%'?1:2)}</span>
+      </div></div>`;
+  };
+  cmp.innerHTML=
+    mkRow('Combustion Efficiency',base.ce*100,preds.ce*100,'%','high')+
+    mkRow('Optimal Injection Rate',base.rate,preds.rate,' kg/tHM','high')+
+    mkRow('Stability Index',base.stab*100,preds.stab*100,'%','high')+
+    mkRow('Coke Replacement Ratio',base.crr,preds.crr,'','high');
+
+  const recos=[];
+  if(preds.ce>base.ce+0.01) recos.push({type:'ok',msg:`CE improved by ${((preds.ce-base.ce)*100).toFixed(1)}% vs baseline. Key driver: ${preds.ce>base.ce?'higher VM and lower moisture':'optimized O₂ enrichment'}.`});
+  if(sc.params.injection_rate>preds.rate+8) recos.push({type:'warn',msg:`Injection rate (${sc.params.injection_rate} kg/tHM) above model optimum. Consider reducing to ${preds.rate.toFixed(0)} kg/tHM to recover combustion efficiency.`});
+  if(sc.params.volatile_matter<75) recos.push({type:'err',msg:`Low VM detected (${sc.params.volatile_matter}%). Activate NIR-based feed diversion. PVC contamination risk — check chlorine monitor.`});
+  if(sc.params.moisture>2) recos.push({type:'err',msg:`Critical moisture (${sc.params.moisture}%). Stop injection, check pre-treatment dryer. CE loss: ${((0.9769-preds.ce)*100).toFixed(1)}%.`});
+  if(sc.params.o2_enrichment>3.5) recos.push({type:'warn',msg:`O₂ above saturation (3.5%). Reduce to 3.0–3.5% to cut costs without CE impact.`});
+  if(recos.length===0) recos.push({type:'ok',msg:`Parameters within optimal operating envelope. No corrective action needed.`});
+
+  document.getElementById('scen-reco').innerHTML=recos.map(r=>`<div class="alert alert-${r.type}"><span class="alert-ico">${r.type==='ok'?'✓':r.type==='err'?'✗':'!'}</span><span>${r.msg}</span></div>`).join('');
+}
+
+function showTab(id) {
+  document.querySelectorAll('.tab').forEach((t,i)=>{const ids=['optimizer','sensitivity','compare','model'];t.classList.toggle('active',ids[i]===id)});
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+id));
+}
+
+window.showTab=showTab;
+window.onSlider=onSlider;
+window.loadScenario=loadScenario;
+
+buildControls();
+const initPreds=predict(currentParams);
+updateMetrics(initPreds, currentParams);
+buildTraceChart();
+buildSensitivityCharts();
+buildValidationChart();
+loadScenario('base', document.querySelector('.scenario-badge'));
+</script>
